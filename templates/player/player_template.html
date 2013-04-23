@@ -2,20 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>RPG Manager Home</title>
+    <title>RPG Manager</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A web application to help manage characters, items, spells, monsters, etc. for RPG games.">
-    <meta name="auhor" content="Jacob Foster">
+    <meta name="author" content="Jacob Foster">
 
     <!-- Le styles -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-    </style>
     <link href="../static/css/bootstrap-responsive.css" rel="stylesheet">
+    <%block name="page_css" />
 
   </head>
 
@@ -30,26 +25,18 @@
             <span class="icon-bar"></span>
           </button>
           <div class="nav-collapse collapse">
-            <form class="navbar-form pull-right" id="signIn">
-              <input class="span2" type="text" placeholder="Username" data-bind="value: username">
-              <input class="span2" type="password" placeholder="Password" data-bind="value: password">
-              <button class="btn" type="submit" data-bind="click: signIn">Sign In</button>
-            </form>
+            <ul class="nav">
+              <li><a href="../templates/home.html">Home</a></li>
+              <li><a href="../templates/games.html">Dungeons</a></li>
+              <li><a href="../templates/characters.html">Characters</a></li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="container">
-
-      <div class="hero-unit">
-        <h1>Welcome!</h1>
-        <p>Welcome to the RPG Manger. If this is your first time visiting, take a moment to register.
-            (Don't worry, it's nothing painful or personal)
-            In no time, you'll be on your way to building some awesome characters and playing some sweet RPGs.</p>
-        <p><a href="/register" class="btn btn-primary btn-large">Register</a></p>
-      </div>
-
+    <div id="page_body">
+        ${self.body()}
     </div>
 
     <!-- Le javascript
@@ -59,8 +46,8 @@
     <script src="../../../static/js/core/knockout.js"></script>
     <script src="../../../static/js/core/validation.js"></script>
     <script src="../../../static/js/core/bootstrap.min.js"></script>
-    <script src="../../../static/js/global/sharedLib.js"></script>
-    <script src="../../../static/js/global/signIn.js"></script>
+    <script src="../../../static/js/core/sharedLib.js"></script>
+    <%block name="page_js" />
 
   </body>
 </html>

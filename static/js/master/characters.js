@@ -1,5 +1,5 @@
 // Class to represent each character
-function Character(name, cls, race, details) {
+dndObjects.Character = function(name, cls, race, details) {
     var self = this;
     self.name = name;
     self.cls = cls;
@@ -12,7 +12,7 @@ function Character(name, cls, race, details) {
 }
 
 // Overall viewmodel for this screen
-function CharactersViewModel() {
+dndViewModels.CharactersVM = function() {
     var self = this;
 
     self.characters = ko.observableArray([
@@ -22,4 +22,4 @@ function CharactersViewModel() {
     ]);
 }
 
-ko.applyBindings(new CharactersViewModel());
+ko.applyBindings(new dndViewModels.CharactersVM());

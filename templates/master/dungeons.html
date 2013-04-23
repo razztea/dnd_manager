@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>RPG Manager</title>
+    <title>RPG Manager - Characters</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A web application to help manage characters, items, spells, monsters, etc. for RPG games.">
     <meta name="author" content="Jacob Foster &amp; Pat">
@@ -21,12 +21,33 @@
 
   <body>
 
-    <%include file="../shared/nav.html">
+  <%include file="../shared/nav.html" />
+
+    <div class="container">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Name</td><td>Class</td><td>Race</td><td></td>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: characters">
+            <tr>
+                <td data-bind="text: name"></td>
+                <td data-bind="text: cls"></td>
+                <td data-bind="text: race"></td>
+                <td><a href="#" data-bind="click: viewDetails()">Details</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    </div> <!-- /container -->
 
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <%include file="../shared/scripts.html">
+    <%include file="../../global/scripts.html" />
+    <script src="../../../static/js/pages/characters.js"></script>
 
   </body>
 </html>
