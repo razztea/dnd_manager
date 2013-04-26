@@ -10,42 +10,56 @@ create table users (
     primary key (username)
 );
 
-create table dungeons (
+create table worlds (
     id              varchar(36),
     master_username varchar(100),
     name            varchar(40),
+    description     text,
     primary key (id),
     constraint foreign key (master_username) references users (username)
 );
 
-create table character_attributes (
+create table characters (
     id              varchar(36),
-    dungeon_id      varchar(36),
+    player_username varchar(100),
+    world_id        varchar(36),
+    race_id         varchar(36),
+    name            varchar(40),
+    primary key (id),
+    constraint foreign key (player_username) references users (username),
+    constraint foreign key (world_id) references worlds (id),
+    constraint foreign key (race_id) references race (id),
+);
+
+create table attributes (
+    id              varchar(36),
+    world_id      varchar(36),
     name            varchar(20),
     min             int,
     max             int,
     primary key (id),
-    constraint foreign key (dungeon_id) references dungeons (id)
+    constraint foreign key (world_id) references worlds (id)
 );
 
-create table character_races (
+create table races (
     id              varchar(36),
-    dungeon_id      varchar(36),
+    world_id        varchar(36),
     name            varchar(20),
     class_limit     int,
     description     text,
     special         text,
     primary key (id),
-    constraint foreign key (dungeon_id) references dungeons (id)
+    constraint foreign key (world_id) references worlds (id)
 );
 
-create table race_modifiers (
+create table race_attribute_modifiers (
     id              varchar(36),
     race_id         varchar(36),
     attribute_id    varchar(36),
+    modifier        int,
     primary key (id),
-    constraint foreign key (race_id) references character_races (id),
-    constraint foreign key (attribute_id) references character_attributes (id)
+    constraint foreign key (race_id) references races (id),
+    constraint foreign key (attribute_id) references attributes (id)
 );
 
 create table race_attribute_requirements (
@@ -55,17 +69,17 @@ create table race_attribute_requirements (
     max             int,
     min             int,
     primary key (id),
-    constraint foreign key (race_id) references character_races (id),
-    constraint foreign key (attribute_id) references character_attributes (id)
+    constraint foreign key (race_id) references races (id),
+    constraint foreign key (attribute_id) references attributes (id)
 );
 
-create table character_classes (
+create table classes (
     id              varchar(36),
-    dungeon_id      varchar(36),
+    world_id      varchar(36),
     name            varchar(20),
     description     text,
     primary key (id),
-    constraint foreign key (dungeon_id) references dungeons (id)
+    constraint foreign key (world_id) references worlds (id)
 );
 
 create table class_attribute_requirements (
@@ -75,8 +89,8 @@ create table class_attribute_requirements (
     max             int,
     min             int,
     primary key (id),
-    constraint foreign key (class_id) references character_classes (id),
-    constraint foreign key (attribute_id) references character_attributes (id)
+    constraint foreign key (class_id) references classes (id),
+    constraint foreign key (attribute_id) references attributes (id)
 );
 
 create table race_class_requirements (
@@ -85,6 +99,26 @@ create table race_class_requirements (
     class_id        varchar(36),
     max_level       int,
     primary key (id),
-    constraint foreign key (race_id) references character_races (id),
-    constraint foreign key (class_id) references character_classes (id)
+    constraint foreign key (race_id) references races (id),
+    constraint foreign key (class_id) references classes (id)
+);
+
+create table character_attributes (
+    id              varchar(36),
+    character_id    varchar(36),
+    attribute_id    varchar(36),
+    value           int,
+    primary key (id),
+    constraint foreign key (character_id) references characters (id),
+    constraint foreign key (attribute_id) references attributes (id),
+);
+
+create table character_classes (
+    id              varchar(36),
+    character_id    varchar(36),
+    class_id        varchar(36),
+    level           int,
+    primary key (id),
+    constraint foreign key (character_id) references characters (id),
+    constraint foreign key (class_id) references classes (id),
 );
