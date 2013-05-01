@@ -10,6 +10,13 @@ create table users (
     primary key (username)
 );
 
+create table sessions (
+    session_id      char(40) not null,
+    atime           timestamp not null default CURRENT_TIMESTAMP,
+    data            text,
+    primary key (session_id)
+);
+
 create table worlds (
     id              varchar(36),
     master_username varchar(100),
@@ -36,6 +43,7 @@ create table characters (
     world_id        varchar(36),
     race_id         varchar(36),
     name            varchar(40),
+    hit_points      int,
     primary key (id),
     constraint foreign key (player_username) references users (username) on delete cascade,
     constraint foreign key (world_id) references worlds (id),
@@ -44,8 +52,9 @@ create table characters (
 
 create table attributes (
     id              varchar(36),
-    world_id      varchar(36),
+    world_id        varchar(36),
     name            varchar(20),
+    description     text,
     min             int,
     max             int,
     primary key (id),
@@ -66,11 +75,31 @@ create table race_attribute_requirements (
 
 create table classes (
     id              varchar(36),
+    world_id        varchar(36),
+    name            varchar(20),
+    description     text,
+    min_hp          int,
+    max_hp          int,
+    primary key (id),
+    constraint foreign key (world_id) references worlds (id) on delete cascade
+);
+
+create table alignments (
+    id              varchar(36),
     world_id      varchar(36),
     name            varchar(20),
     description     text,
     primary key (id),
     constraint foreign key (world_id) references worlds (id) on delete cascade
+);
+
+create table class_alignments (
+    id              varchar(36),
+    class_id        varchar(36),
+    alignment_id    varchar(36),
+    primary key (id),
+    constraint foreign key (class_id) references classes (id) on delete cascade,
+    constraint foreign key (alignment_id) references alignments (id) on delete cascade
 );
 
 create table class_attribute_requirements (
