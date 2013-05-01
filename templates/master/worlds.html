@@ -1,0 +1,16 @@
+<%inherit file="/master/master_template.html" />
+<%block name="page_js">
+    <script src="/static/js/master/worlds.js"></script>
+    <script type="text/javascript">
+        var Get = {
+            username : "${get_value('username')}",
+        };
+    </script>
+</%block>
+<div class="container">
+    <div data-bind="foreach: worlds">
+        <div class="span2"><label data-bind="text: name"></label></div>
+        <div class="span6 offset1"><label data-bind="text: name"></label></div>
+        <div class="span2 offset1"><button class="btn" data-bind="click: $root.goToWorld"></label></div>
+    </div>
+</div>

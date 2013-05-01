@@ -1,5 +1,5 @@
 // Class to represent each character
-dndObjects.Dungeon = function(id, name, master_name, details) {
+dnd.structs.World = function(id, name, master_name, details) {
     var self = this;
     self.id = id;
     self.name = name;
@@ -12,14 +12,14 @@ dndObjects.Dungeon = function(id, name, master_name, details) {
 }
 
 // Overall viewmodel for this screen
-dndViewModels.DungeonsVM = function() {
+dnd.structs.DungeonsVM = function() {
     var self = this;
 
     self.username = Get.username;
     self.dungeons = ko.observableArray([]);
-    self.goToDungeon = function(dungeon) {
-        window.location.href = "/player/character_generation?dungeon="+dungeon.id+"&username="+self.username;
-    }
+    self.goToDungeon = function(world) {
+        window.location.href = "/player/character_generation?world="+world.id+"&username="+self.username;
+    };
 }
 
-ko.applyBindings(new dndViewModels.DungeonsVM());
+ko.applyBindings(new dnd.vms.DungeonsVM());

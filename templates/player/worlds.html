@@ -1,35 +1,27 @@
 <%inherit file="/player/player_template.html" />
-<%block name="page_css">
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-    </style>
-</%block>
 <%block name="page_js">
     <script type="text/javascript">
         var Get = {
             username : "${get_value('username')}",
         };
     </script>
-    <script src="../../static/js/master/dungeons.js"></script>
+    <script src="/static/js/player/worlds.js"></script>
 </%block>
 
 <form id="dungeon-list" class="form-horizontal">
     <div class="container-fluid">
         <div class="row-fluid control-group">
             <div class="span2">
-                <label>Dungeon Name</label>
+                <label>World Name</label>
             </div>
             <div class="span2 offset1">
-                <label>Dungeon Master</label>
+                <label>World Creator</label>
             </div>
             <div class="span4 offset1">
                 <label>Description</label>
             </div>
         </div>
-        <div data-bind="for: dungeons">
+        <div data-bind="for: worlds">
             <div class="row-fluid control-group">
                 <div class="span2">
                     <span data-bind="text: name"></span>
@@ -41,7 +33,7 @@
                     <span data-bind="text: description"></span>
                 </div>
                 <div class="span1 offset1">
-                    <button data-bind="click: $root.goToDungeon"></button>
+                    <button data-bind="click: $root.goToWorld"></button>
                 </div>
             </div>
         </div>
