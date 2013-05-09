@@ -14,16 +14,13 @@ dnd.vms.WorldsVM = function() {
     self.username = Get.username;
     self.worldList = ko.observableArray([]);
     self.goToWorld = function(world) {
-        window.location.href = "/master/edit_world?world="+world.id+"&username="+self.username;
-    };
-    self.newWorld = function() {
-        window.location.href = "/master/edit_world?world=new&username="+self.username;
+        window.location.href = "/player/character_generation?world="+world.id+"&username="+self.username;
     };
 
-    $.post('/gateway?file=master&method=retrieve_world_list', ko.toJSON(this), function(data) {
+    $.post('/gateway?file=player&method=retrieve_world_list', ko.toJSON(this), function(data) {
         if (data.success === "true") {
             $.each(data.worlds, function(idx, world) {
-                self.worldList.push(new dnd.structs.World(world.id, world.name, world.username, world.description));
+                self.worldList.push(new dnd.structs.World(world.id, world.name, world.master_username, world.description));
             });
         }
         else {

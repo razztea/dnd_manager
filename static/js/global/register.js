@@ -13,10 +13,10 @@ dnd.vms.UserRegistrationVM = function() {
                     alert('Registration Successful');
 
                     if (self.account_type() === "master") {
-                        window.location.href = "/master/dungeons?username=" + self.username();
+                        window.location.href = "/master/worlds?username=" + self.username();
                     }
                     else {
-                        window.location.href = "/player/dungeons?username=" + self.username();
+                        window.location.href = "/player/worlds?username=" + self.username();
                     }
                 }
                 else {

@@ -1,6 +1,6 @@
 /*
-    This will contain the sql that needs to be run
-    to create the database and all tables
+    This contains all the sql that needs to be run
+    to create all the tables in the database
 */
 
 create table users (
@@ -97,6 +97,7 @@ create table class_alignments (
     id              varchar(36),
     class_id        varchar(36),
     alignment_id    varchar(36),
+    allowed         bool,
     primary key (id),
     constraint foreign key (class_id) references classes (id) on delete cascade,
     constraint foreign key (alignment_id) references alignments (id) on delete cascade
@@ -117,6 +118,7 @@ create table race_class_requirements (
     id              varchar(36),
     race_id         varchar(36),
     class_id        varchar(36),
+    allowed         bool,
     max_level       int,
     primary key (id),
     constraint foreign key (race_id) references races (id) on delete cascade,

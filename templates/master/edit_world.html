@@ -1,0 +1,175 @@
+<%inherit file="/master/master_template.html" />
+<%block name="page_js">
+    <script type="text/javascript">
+        var Get = {
+            world_id : "${get_value('world')}",
+            username: "${get_value('username')}"
+        };
+    </script>
+    <script src="/static/js/master/edit_world.js"></script>
+</%block>
+<%block name="page_css">
+    <style type="text/css">
+      .centered {
+          text-align: center;
+      }
+    </style>
+</%block>
+<div class="container">
+    <div class="row-fluid">
+        <div class="span4"><input class="span12" type="text" placeholder="World Name..." data-bind="value: world_name"/></div>
+        <div class="span2"><button class="btn btn-primary" id="save" data-loading-text="Saving..." data-bind="click: save">Save <i class="icon-hdd"></i></button></div>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#races" data-toggle="tab">Races</a></li>
+        <li><a href="#classes" data-toggle="tab">Classes</a></li>
+        <li><a href="#attributes" data-toggle="tab">Attributes</a></li>
+        <li><a href="#alignments" data-toggle="tab">Alignments</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="races">
+            <div class="row-fluid">
+                <div class="span2"><label>Name</label></div>
+                <div class="span3"><label>Description</label></div>
+                <div class="span2"><label>Class Limit</label></div>
+                <div class="span3"><label>Special</label></div>
+                <div class="span1"><button class="btn btn-success span12" data-bind="click: addRace"><i class="icon-plus"></i></button></div>
+            </div>
+            <div data-bind="foreach: Races">
+                <div class="row-fluid">
+                    <div class="span2"><input type="text" class="span12" placeholder="Name..." data-bind="value: name"/></div>
+                    <div class="span3"><input type="text" class="span12" placeholder="Description..." data-bind="value: description"/></div>
+                    <div class="span2"><input type="text" class="span12" placeholder="Class Limit..." data-bind="value: class_limit"/></div>
+                    <div class="span3"><input type="text" class="span12" placeholder="Special..." data-bind="value: special"/></div>
+                    <div class="span1"><button class="btn btn-danger span12" data-bind="click: $root.removeRace"><i class="icon-minus"></i></button></div>
+                </div>
+                <div data-bind="visible: $root.Classes().length > 0">
+                    <div class="row-fluid">
+                        <div class="span2 offset1"><label>Class Requirements</label></div>
+                        <div class="span1"><button class="btn" data-bind="click: function() { $root.toggle(view_cr) }"><i class="icon-resize-full"></i></button></div>
+                    </div>
+                    <div class="row-fluid" data-bind="visible: view_cr">
+                        <div class="span2 offset1"><label>Class</label></div>
+                        <div class="span2"><label>Allowed</label></div>
+                        <div class="span2"><label>Max Level</label></div>
+                    </div>
+                    <div data-bind="foreach: class_requirements, visible: view_cr">
+                        <div class="row-fluid">
+                            <div class="span2 offset1"><p class="span12" data-bind="text: cls_name"></p></div>
+                            <div class="span2"><input type="checkbox" data-bind="checked: allowed"/></div>
+                            <div class="span2"><input class="span12" type="text" placeholder="Max Level..." data-bind="value: max_level"/></div>
+                        </div>
+                    </div>
+                </div>
+                <div data-bind="visible: $root.Attributes().length > 0">
+                    <div class="row-fluid">
+                        <div class="span2 offset1"><label>Attribute Requirements</label></div>
+                        <div class="span1"><button class="btn" data-bind="click: function() { $root.toggle(view_ar) }"><i class="icon-resize-full"></i></button></div>
+                    </div>
+                    <div class="row-fluid" data-bind="visible: view_ar">
+                        <div class="span2 offset1"><label>Attribute</label></div>
+                        <div class="span1"><label>Min</label></div>
+                        <div class="span1"><label>Max</label></div>
+                        <div class="span1"><label>Modifier</label></div>
+                    </div>
+                    <div data-bind="foreach: attribute_requirements, visible: view_ar">
+                        <div class="row-fluid">
+                            <div class="span2 offset1"><p class="span12" data-bind="text: attr_name"></p></div>
+                            <div class="span1"><input class="span12" type="text" data-bind="value: min"/></div>
+                            <div class="span1"><input class="span12" type="text" data-bind="value: max"/></div>
+                            <div class="span1"><input class="span12" type="text" data-bind="value: modifier"/></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="classes">
+            <div class="row-fluid">
+                <div class="span2"><label>Name</label></div>
+                <div class="span3"><label>Description</label></div>
+                <div class="span1"><label>Min HP</label></div>
+                <div class="span1"><label>Max HP</label></div>
+                <div class="span3"><label>Special</label></div>
+                <div class="span1"><button class="btn btn-success span12" data-bind="click: addClass"><i class="icon-plus"></i></button></div>
+            </div>
+            <div data-bind="foreach: Classes">
+                <div class="row-fluid">
+                    <div class="span2"><input type="text" class="span12" placeholder="Name..." data-bind="value: name"/></div>
+                    <div class="span3"><input type="text" class="span12" placeholder="Description..." data-bind="value: description"/></div>
+                    <div class="span1"><input type="text" class="span12" placeholder="Min HP..." data-bind="value: min_hp"/></div>
+                    <div class="span1"><input type="text" class="span12" placeholder="Max HP..." data-bind="value: max_hp"/></div>
+                    <div class="span3"><input type="text" class="span12" placeholder="Special..." data-bind="value: special"/></div>
+                    <div class="span1"><button class="btn btn-danger span12" data-bind="click: $root.removeClass"><i class="icon-minus"></i></button></div>
+                </div>
+                <div data-bind="visible: $root.Attributes().length > 0">
+                    <div class="row-fluid">
+                        <div class="span2 offset1"><label>Attribute Requirements</label></div>
+                        <div class="span1"><button class="btn" data-bind="click: function() { $root.toggle(view_ar) }"><i class="icon-resize-full"></i></button></div>
+                    </div>
+                    <div class="row-fluid" data-bind="visible: view_ar">
+                        <div class="span2 offset1"><label>Atribute</label></div>
+                        <div class="span1"><label>Min</label></div>
+                        <div class="span1"><label>Max</label></div>
+                        <div class="span1"><label>Modifier</label></div>
+                    </div>
+                    <div data-bind="foreach: attribute_requirements, visible: view_ar">
+                        <div class="row-fluid">
+                            <div class="span2 offset1"><p class="span2 offset1" data-bind="text: attr_name"></p></div>
+                            <div class="span1"><input class="span12" type="text" data-bind="value: min"/></div>
+                            <div class="span1"><input class="span12" type="text" data-bind="value: max"/></div>
+                            <div class="span1"><input class="span12" type="text" data-bind="value: modifier"/></div>
+                        </div>
+                    </div>
+                </div>
+                <div data-bind="visible: $root.Alignments().length > 0">
+                    <div class="row-fluid">
+                        <div class="span2 offset1"><label>Alignment Requirements</label></div>
+                        <div class="span1"><button class="btn" data-bind="click: function() { $root.toggle(view_al) }"><i class="icon-resize-full"></i></button></div>
+                    </div>
+                    <div class="row-fluid" data-bind="visible: view_al">
+                        <div class="span2 offset1"><label>Alignment</label></div>
+                        <div class="span2"><label>Allowed</label></div>
+                    </div>
+                    <div data-bind="foreach: alignments,visible: view_al">
+                        <div class="row-fluid">
+                            <div class="span2 offset1"><p data-bind="text: ali_name"></p></div>
+                            <div class="span2"><input type="checkbox" data-bind="checked: allowed"/></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="attributes">
+            <div class="row-fluid">
+                <div class="span2"><label>Name</label></div>
+                <div class="span3"><label>Description</label></div>
+                <div class="span1"><label>Min</label></div>
+                <div class="span1"><label>Max</label></div>
+                <div class="span1"><button class="btn btn-success span12" data-bind="click: addAttribute"><i class="icon-plus"></i></button></div>
+            </div>
+            <div data-bind="foreach: Attributes">
+                <div class="row-fluid">
+                    <div class="span2"><input type="text" class="span12" placeholder="Name..." data-bind="value: name"/></div>
+                    <div class="span3"><input type="text" class="span12" placeholder="Description..." data-bind="value: description"/></div>
+                    <div class="span1"><input type="text" class="span12" placeholder="Min HP..." data-bind="value: min"/></div>
+                    <div class="span1"><input type="text" class="span12" placeholder="Max HP..." data-bind="value: max"/></div>
+                    <div class="span1"><button class="btn btn-danger span12" data-bind="click: $root.removeAttribute"><i class="icon-minus"></i></button></div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="alignments">
+            <div class="row-fluid">
+                <div class="span2"><label>Name</label></div>
+                <div class="span3"><label>Description</label></div>
+                <div class="span1"><button class="btn btn-success span12" data-bind="click: addAlignment"><i class="icon-plus"></i></button></div>
+            </div>
+            <div data-bind="foreach: Alignments">
+                <div class="row-fluid">
+                    <div class="span2"><input type="text" class="span12" placeholder="Name..." data-bind="value: name"/></div>
+                    <div class="span3"><input type="text" class="span12" placeholder="Description..." data-bind="value: description"/></div>
+                    <div class="span1"><button class="btn btn-danger span12" data-bind="click: $root.removeAlignment"><i class="icon-minus"></i></button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

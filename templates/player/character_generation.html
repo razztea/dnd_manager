@@ -1,45 +1,43 @@
 <%inherit file="/player/player_template.html" />
-<%block name="page_css">
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-    </style>
-</%block>
 <%block name="page_js">
-    <script src="../../static/js/pages/character_generation.js"></script>
     <script type="text/javascript">
         var Get = {
             username : "${get_value('username')}",
+            world_id: "${get_value('world')}"
         };
     </script>
+    <script src="/static/js/player/character_generation.js"></script>
 </%block>
 
 <form id="character_info" class="form-horizontal">
     <div class="container-fluid">
         <div class="row-fluid control-group">
-            <div class="span3">
+            <div class="span2">
                 <label>Name</label>
                 <input type="text" placeholder="Your Character's Name..." data-bind="value: char_name"/>
             </div>
-            <div class="span3 offset1">
+            <div class="span2 offset1">
+                <label>Race</label>
+                <select id="char_race" data-bind="options: availableRaces, value: char_race"></select>
+            </div>
+            <div class="span2 offset1">
                 <label>Class</label>
                 <select data-bind="options: availableClasses, value: char_class"></select>
             </div>
-            <div class="span3 offset1">
-                <label>Race</label>
-                <select id="char_race" data-bind="options: availableRaces, value: char_race"></select>
+            <div class="span2 offset1">
+                <label>Alignment</label>
+                <select id="char_race" data-bind="options: availableAlignments, value: char_alignment"></select>
             </div>
         </div>
         <div class="row-fluid">
             <div class="span3 control-group">
                 <button class="btn btn-success" data-bind="click: generateStats">Generate Stats</button>
             </div>
-            <div class="span9">
+            <div class="span2">
+                <button class="btn btn-primary" id="save" data-loading-text="Saving..." data-bind="click: save">Save <i class="icon-hdd"></i></button>
             </div>
         </div>
-        <div data-bind="foreach: stats">
+        <div data-bind="foreach: attributes">
             <div class="row-fluid control-group">
                 <div class="span3">
                     <label data-bind="text: name"></label>

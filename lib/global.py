@@ -5,7 +5,7 @@ like user registration.
 import MySQLdb
 import simplejson
 
-connection = MySQLdb.connect(user='dnd_root', passwd='dnd_root', host='localhost', db='dnd_manager')
+connection = MySQLdb.connect(user='rpg_root', passwd='rpg_root', host='localhost', db='rpg_manager')
 db_cursor = connection.cursor(MySQLdb.cursors.DictCursor)
 
 def register(json_data):

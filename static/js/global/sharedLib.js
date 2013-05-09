@@ -4,7 +4,8 @@
 // Global namespace for all dnd View Models
 dnd = {
     vms: {},
-    instances: {}
+    instances: {},
+    structs: {}
 };
 
 ko.validation.init({

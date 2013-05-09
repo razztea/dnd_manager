@@ -27,7 +27,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
 
 def key_generator(namespace, fn):
     def generate_key(*arg):
-        return "{0}:{1}:{2}|{3}".format('dnd_manager', namespace or '' + fn.__module__,
+        return "{0}:{1}:{2}|{3}".format('rpg_manager', namespace or '' + fn.__module__,
                                         fn.__name__, ", ".join(str(s) for s in arg))
     return generate_key
 
@@ -36,7 +36,7 @@ LONG_TERM_CACHE = make_region(function_key_generator=key_generator,
     'dogpile.cache.dbm',
     expiration_time=1800,    # 30 Minutes
     arguments = {
-        'filename': '/tmp/dogpile_dnd_manager_cache.dbm'
+        'filename': '/tmp/dogpile_rpg_manager_cache.dbm'
     }
 )
 
@@ -46,7 +46,7 @@ urls = ("/", "Index",
 
 app = web.application(urls, globals())
 
-webpy_db = web.database(dbn='mysql', user='dnd_root', passwd='dnd_root', host='localhost', db='dnd_manager')
+webpy_db = web.database(dbn='mysql', user='rpg_root', passwd='rpg_root', host='localhost', db='rpg_manager')
 
 session = web.session.Session(app, web.session.DBStore(webpy_db, 'sessions'),
                               initializer={
@@ -197,7 +197,7 @@ application = app.wsgifunc(StaticMiddleware)
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(description='Starts serving up the dnd_manager stuff.')
+    parser = argparse.ArgumentParser(description='Starts serving up the rpg_manager stuff.')
     parser.add_argument("--port", "-p", dest='port', help='Port number to run on', type=int, default=8050)
     args = parser.parse_args()
 

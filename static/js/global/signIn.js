@@ -8,10 +8,10 @@ dnd.vms.SignInVM = function() {
             $.post('/gateway?file=global&method=sign_in', ko.toJSON(this), function(data) {
                 if (data.success === "true") {
                     if (data.account_type === "master") {
-                        window.location.href = "/master/dungeons?username=" + data.username;
+                        window.location.href = "/master/worlds?username=" + data.username;
                     }
                     else {
-                        window.location.href = "/player/dungeons?username=" + data.username;
+                        window.location.href = "/player/worlds?username=" + data.username;
                     }
                 }
                 else {
